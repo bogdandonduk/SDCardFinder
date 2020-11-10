@@ -27,7 +27,7 @@ class FileManager {
 
                 isFindingExternalRoot = true
 
-                var shortestPathLength = 10000
+                var shortestPathLength = 1000000
 
                 while(!cursor.isAfterLast) {
                     val data = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA))
