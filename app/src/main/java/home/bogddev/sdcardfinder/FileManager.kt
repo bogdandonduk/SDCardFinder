@@ -33,7 +33,7 @@ class FileManager {
                     val data = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA))
 
                     if(!data.toLowerCase().contains(internalRootPath.toLowerCase())) {
-                        if(!internalRootPath.toLowerCase().contains(data)) {
+                        if(!internalRootPath.toLowerCase().contains(data.toLowerCase())) {
                             val splitData = data.split(File.separator)
 
                             if(splitData.size < shortestPathLength) {
