@@ -27,18 +27,27 @@ class FileManager {
 
                 isFindingExternalRoot = true
 
-                var shortestPathLength = 1000000
+                var shortestPathLength = 100000000
 
-                while(!cursor.isAfterLast) {
+                val internalRootFile = File(internalRootPath)
+
+                while (!cursor.isAfterLast && externalRootPath.isEmpty()) {
                     val data = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA))
 
-                    if(!data.toLowerCase().contains(internalRootPath.toLowerCase())) {
-                        if(!internalRootPath.toLowerCase().contains(data.toLowerCase())) {
+                    if (!data.contains(internalRootFile.absolutePath, true)) {
+                        if(!internalRootFile.absolutePath.contains(data, true)) {
                             val splitData = data.split(File.separator)
 
-                            if(splitData.size < shortestPathLength) {
+                            if (splitData.size < shortestPathLength) {
                                 shortestPathLength = splitData.size
-                                externalRootPath = data
+
+                                File(data).apply {
+                                    if (isDirectory && totalSpace != internalRootFile.totalSpace && !data.contains(internalRootFile.parent!!, true)) {
+                                        externalRootPath = data
+
+                                    }
+                                }
+
                             }
                         }
                     }
